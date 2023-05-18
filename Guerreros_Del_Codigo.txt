@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class Proyecto1 {
+
+    public static void main(String[] args) {
+        Scanner scn = new Scanner(System.in);
+        int nmL=0;
+        int i, j, aux;
+        nmL = NumLapicez();
+        int [] A= new int[nmL];
+        int [] Digito = new int [nmL];
+        for(i = 0; i<nmL; i++){
+            System.out.print((i+1) +".- Ingrese el numero del lapiz: ");
+            A[i] = scn.nextInt();
+        System.out.print("\n\n");
+        }
+        for (i = 0; i < A.length - 1; i++) {
+            for (j = 0; j < A.length - i - 1; j++) {                                                              
+                if (A[j + 1] < A[j]) {
+                    aux = A[j + 1];
+                    A[j + 1] = A[j];
+                    A[j] = aux;
+                }
+            }
+        }
+        int x,contador=0;
+        System.out.print("Ingrese el digito de lapiz a buscar: ");
+        x=scn.nextInt();
+        
+        for(i=0;i<nmL;i++){
+            if(A[i]==x){
+                contador++;
+            }
+        }
+        System.out.println("El lapiz con el digito " + x +" se encontro " + contador + " veces.");
+    }
+    
+    public static int NumLapicez(){
+        Scanner scn = new Scanner(System.in);
+        System.out.println("Ingrese el numero de lapices a ingresar: ");
+        int lapis = scn.nextInt();
+        return lapis;
+    }
+}

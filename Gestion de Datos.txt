@@ -1,0 +1,63 @@
+CREATE DATABASE GestionDeTareas;
+
+USE GestionDeTareas;
+
+create table TAREAS(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+tituloTarea VARCHAR(30) ,
+descripcion VARCHAR(60) ,
+fechaDecreacion DATE,
+estado ENUM ('pendiente','progreso','completado') DEFAULT 'pendiente'
+);
+
+CREATE TABLE etiquetas(
+id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+tituloEtiqueta VARCHAR(30)
+);
+
+CREATE TABLE usuarios(etiquetas
+id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+nombreUsuario VARCHAR(40),
+passwordUsuario VARCHAR(90)
+);
+
+
+
+ALTER TABLE `gestiondetareas`.`etiquetas` 
+ADD CONSTRAINT `fketiquetas`
+  FOREIGN KEY (`id`)
+  REFERENCES `gestiondetareas`.`tareas` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+ALTER TABLE `gestiondetareas`.`tareas` 
+ADD CONSTRAINT `fktareas`
+  FOREIGN KEY (`id`)
+  REFERENCES `gestiondetareas`.`etiquetas` (`id`)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE;
+
+
+ALTER TABLE `gestiondetareas`.`tareas` 
+ADD COLUMN `tareasUsuario` INT NOT NULL AFTER `estado`,
+DROP PRIMARY KEY,
+ADD PRIMARY KEY (`id`, `tareasUsuario`);
+;
+
+INSERT INTO `gestiondetareas`.`etiquetas` (`tituloEtiqueta`) VALUES ('t1');
+INSERT INTO `gestiondetareas`.`etiquetas` (`tituloEtiqueta`) VALUES ('t2');
+INSERT INTO `gestiondetareas`.`etiquetas` (`tituloEtiqueta`) VALUES ('t3');
+
+
+INSERT INTO `gestiondetareas`.`tareas` (`tituloTarea`, `descripcion`, `fechaDecreacion`) VALUES ('t1', 't1', '1993-12-11');
+INSERT INTO `gestiondetareas`.`tareas` (`tituloTarea`, `descripcion`, `fechaDecreacion`) VALUES ('t2', 't2', '1993-10-11');
+INSERT INTO `gestiondetareas`.`tareas` (`tituloTarea`, `descripcion`, `fechaDecreacion`) VALUES ('t3', 't3', '1993-12-09');
+
+
+INSERT INTO `gestiondetareas`.`usuarios` (`nombreUsuario`, `passwordUsuario`) VALUES ('aaron', '123');
+INSERT INTO `gestiondetareas`.`usuarios` (`nombreUsuario`, `passwordUsuario`) VALUES ('chagoya', '123');
+INSERT INTO `gestiondetareas`.`usuarios` (`nombreUsuario`, `passwordUsuario`) VALUES ('laol', '123');
+
+
+SELECT * FROM tareas WHERE estado = 'pendiente';
